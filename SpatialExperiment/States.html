@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+
+<!-- Sources include:
+
+how to display geography:  http://bost.ocks.org/mike/map/
+data source:  http://bost.ocks.org/mike/leaflet/us-states.json
+
+
+-->
+<meta charset="utf-8">
+
+
+<head>
+<!-- <script src="lib/d3.js" charset="utf-8"></script> -->
+<script src="lib/d3.js"></script>
+<script src="http://d3js.org/topojson.v1.min.js"></script>
+<!-- <script src="src/States.js"></script>
+-->
+
+
+</head>
+
+<body>
+
+<script>
+
+	var width = 960,
+		height = 500; // 1160
+		
+	var svg = d3.select("body").append("svg")
+		.attr("width", width)
+		.attr("height", height);
+		
+	console.log(d3.select("body"));
+	console.log(svg);
+	
+	d3.json("us-states.json", function(error, usstates) {
+		if (error) return console.error(error);
+		console.log(usstates);
+		
+		
+		var projection = d3.geo.albers()
+			.scale(800) 
+			.translate([width / 2, height / 2]);
+			
+		console.log(svg);
+		
+		var path = d3.geo.path()
+			.projection(projection);
+			
+		svg.append("path")
+			.datum(usstates)
+			.attr("d", path)
+			.attr("fill", "none")
+			.attr("stroke", "black");
+			
+	});
+	
+	
+
+</script>
+
+<p></p>
+
+</body>
+</html>
